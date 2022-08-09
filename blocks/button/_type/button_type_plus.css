@@ -1,0 +1,14 @@
+.button_type_plus{
+    padding: 10px 61px;
+    border: 2px solid #fff;
+}
+@media screen and (max-width: 1023px) {
+    .button_type_plus{
+        padding: 14px 20px;
+    }
+  }
+  @media screen and (max-width: 766px) {
+    .button_type_plus{
+        padding: 10px 125px;
+    }
+  }

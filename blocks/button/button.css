@@ -1,0 +1,9 @@
+.button{
+    background: none;
+    box-shadow: none;
+    margin: 0;
+}
+
+.button:hover{
+    opacity: .6;
+}

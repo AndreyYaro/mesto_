@@ -1,0 +1,16 @@
+.button_type_save{
+    font-size: 18px;
+    line-height: 1.2;
+    color: #fff;
+    background-color: #000;
+    border-radius: 2px;
+    padding: 16px 125px;
+    margin: 48px 0 0 0;
+}
+
+@media screen and (max-width: 767px) {
+    .button_type_save{
+        font-size: 14px;
+        padding: 14px 82px;
+    }
+}
