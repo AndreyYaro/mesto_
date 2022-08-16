@@ -8,17 +8,5 @@
     align-items: center;
     z-index: 2;
     display: none;
-}
-
-.popup::before{
-    background-color: #000;
-    display: flex;
-    content: " ";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    opacity: .5;
-    z-index: 1;
+    background-color: rgba(0, 0, 0, .5);
 }

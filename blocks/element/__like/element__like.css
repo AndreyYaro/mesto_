@@ -9,3 +9,7 @@
     box-shadow: none;
     border: none;
 }
+
+.element__like:hover{
+    opacity: .5;
+}
