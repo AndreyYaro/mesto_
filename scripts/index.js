@@ -16,7 +16,7 @@ const profileName = document.querySelector('.profile__name')
 const profileProfession = document.querySelector('.profile__profession')
 const listElement = document.querySelector('.elements')
 // Объявляем переменные формы Поп-апа(2)
-const popupAddFoam = document.querySelector('.popup__content_type_add')
+const popupAddCard = document.querySelector('.popup__content_type_add')
 const placeInput = document.querySelector('.popup__info_type_place')
 const linkInput = document.querySelector('.popup__info_type_link')
 
@@ -40,37 +40,39 @@ const templateElement = document.querySelector('.template')
     itemElement.remove()
 }
 
-//  функция добавления слушателей на каждую карточку
-function addCard(element){
-    element.querySelector('.element__like').addEventListener('click', likeToggle)
-    element.querySelector('.element__trash').addEventListener('click', moveToTrash)
-    element.querySelector('.element__image').addEventListener('click', openPopupImg)
+//  функция добавления карточки 
+function addCard(item) {
+    const addCard = createCard(item);
+    listElement.prepend(addCard);
 }
 
 // функция создания карточки
 function createCard(item){
-    let newItemElement = templateElement.content.cloneNode(true)
+
+    const newItemElement = templateElement.content.cloneNode(true)
     newItemElement.querySelector('.element__name').textContent = item.name
 
     const newImageElement = newItemElement.querySelector('.element__image')
     newImageElement.setAttribute('src', item.link)
     newImageElement.setAttribute('alt', item.name)
 
-    addCard(newItemElement)
+    newItemElement.querySelector('.element__like').addEventListener('click', likeToggle)
+    newItemElement.querySelector('.element__trash').addEventListener('click', moveToTrash)
+    newItemElement.querySelector('.element__image').addEventListener('click', openPopupImg)
 
-    listElement.prepend(newItemElement)
+    return newItemElement
 }
 
-initialCards.forEach(createCard)
+initialCards.forEach(addCard)
 
 // Функция добавления карточки
 function submitAddCardForm(evt){
     evt.preventDefault();    
-    let text = placeInput.value
-    let linkAdd = linkInput.value
+    const text = placeInput.value
+    const linkAdd = linkInput.value
     placeInput.value = ''
     linkInput.value = ''
-    createCard({name: text,link: linkAdd})
+    addCard({name: text,link: linkAdd})
     closePopup(popupAdd)  
 }
 
@@ -117,5 +119,5 @@ addButton.addEventListener('click',() => openPopup(popupAdd))
 editButton.addEventListener('click',() => openPopupEdit(popupEdit))
 
 popupEditForm.addEventListener('submit',submitEditProfileForm);
-popupAddFoam.addEventListener('submit', submitAddCardForm)
+popupAddCard.addEventListener('submit', submitAddCardForm)
 
