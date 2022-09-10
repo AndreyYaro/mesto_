@@ -6,19 +6,20 @@ const closeAddButton = document.querySelector('.button_type_close-add')
 const popupEdit = document.querySelector('.popup_type_edit')
 const popupAdd = document.querySelector('.popup_type_add')
 const likeButton = document.querySelector('.element__like')
+const popup = document.querySelector('.popup')
 
 // Объявляем переменные формы Поп-апа(1)
-const popupEditForm = document.querySelector('.popup__content_type_edit') 
-const nameInput = document.querySelector('.popup__info_type_name')
-const jobInput = document.querySelector('.popup__info_type_profession')
+const popupEditForm = document.querySelector('.popup__form_type_edit') 
+const nameInput = document.querySelector('.popup__input_type_name')
+const jobInput = document.querySelector('.popup__input_type_profession')
 // Объявляем переменные для титульной страницы
 const profileName = document.querySelector('.profile__name')
 const profileProfession = document.querySelector('.profile__profession')
 const listElement = document.querySelector('.elements')
 // Объявляем переменные формы Поп-апа(2)
-const popupAddCard = document.querySelector('.popup__content_type_add')
-const placeInput = document.querySelector('.popup__info_type_place')
-const linkInput = document.querySelector('.popup__info_type_link')
+const popupAddCard = document.querySelector('.popup__form_type_add')
+const placeInput = document.querySelector('.popup__input_type_place')
+const linkInput = document.querySelector('.popup__input_type_link')
 
 // объявляем переменные формы открытия картинки
 const popupCard = document.querySelector('.popup-card')
@@ -87,6 +88,8 @@ function submitEditProfileForm (evt) {
 // Открытие попапа
 function openPopup(item){
     item.classList.add('popup_opened')
+    document.addEventListener('keydown', escKeydown)
+    document.addEventListener('click', overlowClick)
 }   
 
 // Открытие Попапа картинки
@@ -110,6 +113,33 @@ function closePopup (item) {
     item.classList.remove('popup_opened');
 }
 
+// закрытие попапа через esc
+const escKeydown = (evt) => {
+    if (evt.key === 'Escape') {
+        const activePopup = document.querySelector ('.popup_opened')
+        if (activePopup) {
+            closePopup(activePopup)
+        } else {
+            document.removeEventListener('keydown', escKeydown)
+        }
+    }
+}
+
+// закрытие при клике по фону
+const overlowClick = (evt) => {
+    if (
+        (evt.target.classList.contains('popup') &&
+        !evt.target.classList.contains('popup__container')) 
+        || 
+        (evt.target.classList.contains('popup-card') &&
+        !evt.target.classList.contains('popup-card__img'))
+      ) {
+        const activePopup = document.querySelector ('.popup_opened')
+        closePopup(activePopup);
+      }
+};
+
+ 
 // Добавляем слушатели действий для кнопок 
 closeEditButton.addEventListener('click', () => closePopup(popupEdit))
 closeAddButton.addEventListener('click', () => closePopup(popupAdd))
@@ -120,4 +150,5 @@ editButton.addEventListener('click',() => openPopupEdit(popupEdit))
 
 popupEditForm.addEventListener('submit',submitEditProfileForm);
 popupAddCard.addEventListener('submit', submitAddCardForm)
+
 

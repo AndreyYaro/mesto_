@@ -29,12 +29,15 @@
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__signature/footer__signature.css);
 /* popups */
+@import url(../blocks/error/error.css);
+@import url(../blocks/error/_visible/error_visible.css);
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/__container/popup__container.css);
-@import url(../blocks/popup/__content/popup__content.css);
-@import url(../blocks/popup/__info/popup__info.css);
-@import url(../blocks/popup/__info/_type/popup__info_type_name.css);
-@import url(../blocks/popup/__info/_type/popup__info_type_profession.css);
+@import url(../blocks/popup/__form/popup__form.css);
+@import url(../blocks/popup/__input/popup__input.css);
+@import url(../blocks/popup/__input/_type/popup__input_type_name.css);
+@import url(../blocks/popup/__input/_type/popup__input_type_profession.css);
+@import url(../blocks/popup/__input/_type/popup__input_type_error.css);
 @import url(../blocks/popup/__title/popup__title.css);
 @import url(../blocks/button/_type/button_type_close-add.css);
 @import url(../blocks/button/_type/button_type_close-edit.css);
@@ -46,3 +49,4 @@
 @import url(../blocks/popup-card/__container/popup-card__container.css);
 @import url(../blocks/button/_type/button_type_close-card.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
+@import url(../blocks/button/_inactive/button_inactive.css);

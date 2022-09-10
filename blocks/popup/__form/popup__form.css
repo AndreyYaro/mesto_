@@ -1,8 +1,8 @@
-.popup__content{
+.popup__form{
     max-width: 358px;
 }
 @media screen and (max-width: 766px) {
-    .popup__content{
+    .popup__form{
         max-width: 238px;
     }
 }
