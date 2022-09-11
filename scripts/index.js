@@ -1,12 +1,9 @@
 // Объявляем переменные 
 const editButton = document.querySelector('.button_type_edit')
-const closeEditButton = document.querySelector('.button_type_close-edit')
 const addButton = document.querySelector('.button_type_plus')
-const closeAddButton = document.querySelector('.button_type_close-add')
 const popupEdit = document.querySelector('.popup_type_edit')
 const popupAdd = document.querySelector('.popup_type_add')
 const likeButton = document.querySelector('.element__like')
-const popup = document.querySelector('.popup')
 
 // Объявляем переменные формы Поп-апа(1)
 const popupEditForm = document.querySelector('.popup__form_type_edit') 
@@ -25,7 +22,7 @@ const linkInput = document.querySelector('.popup__input_type_link')
 const popupCard = document.querySelector('.popup-card')
 const popupImages = document.querySelector('.popup-card__img')
 const popupText = document.querySelector('.popup-card__text')
-const closePopupImg = document.querySelector('.button_type_close-card')
+const closePopups = document.querySelector('.popup__close')
 
 const templateElement = document.querySelector('.template')
 
@@ -49,22 +46,29 @@ function addCard(item) {
 
 // функция создания карточки
 function createCard(item){
-
+    
     const newItemElement = templateElement.content.cloneNode(true)
     newItemElement.querySelector('.element__name').textContent = item.name
-
+    
     const newImageElement = newItemElement.querySelector('.element__image')
     newImageElement.setAttribute('src', item.link)
     newImageElement.setAttribute('alt', item.name)
-
+    
     newItemElement.querySelector('.element__like').addEventListener('click', likeToggle)
     newItemElement.querySelector('.element__trash').addEventListener('click', moveToTrash)
     newItemElement.querySelector('.element__image').addEventListener('click', openPopupImg)
-
+    
     return newItemElement
 }
 
 initialCards.forEach(addCard)
+
+// Функция закрытия Попапа
+function closePopup (item) {
+    item.classList.remove('popup_opened');
+    document.removeEventListener('keydown', escKeydown)
+    document.removeEventListener('mousedown', universalClick)
+}
 
 // Функция добавления карточки
 function submitAddCardForm(evt){
@@ -89,11 +93,11 @@ function submitEditProfileForm (evt) {
 function openPopup(item){
     item.classList.add('popup_opened')
     document.addEventListener('keydown', escKeydown)
-    document.addEventListener('click', overlowClick)
+    document.addEventListener('mousedown', universalClick)
 }   
 
 // Открытие Попапа картинки
-  function openPopupImg (item) {
+function openPopupImg (item) {
     openPopup(popupCard)
     const image = item.target.closest('.element__image')
     popupImages.src = image.src
@@ -108,47 +112,58 @@ function openPopupEdit(item) {
     jobInput.value = profileProfession.textContent
 }
 
-// Функция закрытия Попапа
-function closePopup (item) {
-    item.classList.remove('popup_opened');
-}
-
 // закрытие попапа через esc
-const escKeydown = (evt) => {
+function escKeydown(evt) {
     if (evt.key === 'Escape') {
-        const activePopup = document.querySelector ('.popup_opened')
-        if (activePopup) {
-            closePopup(activePopup)
-        } else {
-            document.removeEventListener('keydown', escKeydown)
-        }
+      const openedPopup = document.querySelector('.popup_opened')
+      closePopup(openedPopup)
     }
-}
-
+  }
+        
 // закрытие при клике по фону
-const overlowClick = (evt) => {
-    if (
-        (evt.target.classList.contains('popup') &&
-        !evt.target.classList.contains('popup__container')) 
-        || 
-        (evt.target.classList.contains('popup-card') &&
-        !evt.target.classList.contains('popup-card__img'))
-      ) {
-        const activePopup = document.querySelector ('.popup_opened')
-        closePopup(activePopup);
-      }
-};
+// const overlowClick = (evt) => {
+//     if (
+//         (evt.target.classList.contains('popup') &&
+//         !evt.target.classList.contains('popup__container')) 
+//       ) {
+//         const activePopup = document.querySelector ('.popup_opened')
+//         closePopup(activePopup);
+//       }
+// };
 
- 
-// Добавляем слушатели действий для кнопок 
-closeEditButton.addEventListener('click', () => closePopup(popupEdit))
-closeAddButton.addEventListener('click', () => closePopup(popupAdd))
-closePopupImg.addEventListener('click', () => closePopup(popupCard))
+// Добавляем слушатели действий для кнопок крестика
+// function closeButton () {
+//     const closePopups = document.querySelectorAll('.popup__close');
+    
+//     closePopups.forEach((button) => {
+//       const popup = button.closest('.popup');
+//       button.addEventListener('click', () => closePopup(popup));
+//     });
+// }
 
+                    
+// универсальная функция оверлея и крестика(спасибоо за наводку, удобно очень)
+function universalClick () {
+    const popups = document.querySelectorAll('.popup')
+
+      popups.forEach((popup) => {
+          popup.addEventListener('mousedown', (evt) => {
+              if (evt.target.classList.contains('popup_opened')) {
+                  closePopup(popup)
+              }
+              if (evt.target.classList.contains('popup__close')) {
+                closePopup(popup)
+              }
+          })
+      })
+    }
+
+                    
 addButton.addEventListener('click',() => openPopup(popupAdd))
 editButton.addEventListener('click',() => openPopupEdit(popupEdit))
-
+                    
 popupEditForm.addEventListener('submit',submitEditProfileForm);
 popupAddCard.addEventListener('submit', submitAddCardForm)
-
-
+                    
+                    
+                    
