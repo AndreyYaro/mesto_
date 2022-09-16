@@ -68,7 +68,6 @@ initialCards.forEach(addCard)
 function closePopup (item) {
     item.classList.remove('popup_opened');
     document.removeEventListener('keydown', escKeydown)
-    document.removeEventListener('mousedown', setCloseListeners)
 }
 
 // Функция добавления карточки
@@ -95,7 +94,6 @@ function submitEditProfileForm (evt) {
 function openPopup(item){
     item.classList.add('popup_opened');
     document.addEventListener('keydown', escKeydown);
-    setCloseListeners();
 }   
 
 // Открытие Попапа картинки
@@ -117,28 +115,29 @@ function openPopupEdit(item) {
 // закрытие попапа через esc
 function escKeydown(evt) {
     if (evt.key === 'Escape') {
-      const openedPopup = document.querySelector('.popup_opened')
-      closePopup(openedPopup)
+        const openedPopup = document.querySelector('.popup_opened')
+        closePopup(openedPopup)
     }
-  }
-                    
+}
+
 // универсальная функция оверлея и крестика(спасибоо за наводку, удобно очень)
 function setCloseListeners () {
     const popups = document.querySelectorAll('.popup')
-
-      popups.forEach((popup) => {
-          popup.addEventListener('mousedown', (evt) => {
-              if (evt.target.classList.contains('popup_opened')) {
-                  closePopup(popup)
-              }
-              if (evt.target.classList.contains('popup__close')) {
+    
+    popups.forEach((popup) => {
+        popup.addEventListener('mousedown', (evt) => {
+            if (evt.target.classList.contains('popup_opened')) {
                 closePopup(popup)
-              }
-          })
-      })
-    }
+            }
+            if (evt.target.classList.contains('popup__close')) {
+                closePopup(popup)
+            }
+        })
+    })
+}
 
-                    
+setCloseListeners();
+
 addButton.addEventListener('click',() => openPopup(popupAdd))
 editButton.addEventListener('click',() => openPopupEdit(popupEdit))
                     
