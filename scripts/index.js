@@ -1,4 +1,5 @@
 // Объявляем переменные 
+const createButton = document.querySelector('.button_type_create')
 const editButton = document.querySelector('.button_type_edit')
 const addButton = document.querySelector('.button_type_plus')
 const popupEdit = document.querySelector('.popup_type_edit')
@@ -67,7 +68,7 @@ initialCards.forEach(addCard)
 function closePopup (item) {
     item.classList.remove('popup_opened');
     document.removeEventListener('keydown', escKeydown)
-    document.removeEventListener('mousedown', universalClick)
+    document.removeEventListener('mousedown', setCloseListeners)
 }
 
 // Функция добавления карточки
@@ -78,7 +79,8 @@ function submitAddCardForm(evt){
     placeInput.value = ''
     linkInput.value = ''
     addCard({name: text,link: linkAdd})
-    closePopup(popupAdd)  
+    closePopup(popupAdd) 
+    inactivateButton(createButton, validationConfig); 
 }
 
 // Функция отправки заполненной формы редактирования имени  
@@ -91,9 +93,9 @@ function submitEditProfileForm (evt) {
 
 // Открытие попапа
 function openPopup(item){
-    item.classList.add('popup_opened')
-    document.addEventListener('keydown', escKeydown)
-    document.addEventListener('mousedown', universalClick)
+    item.classList.add('popup_opened');
+    document.addEventListener('keydown', escKeydown);
+    setCloseListeners();
 }   
 
 // Открытие Попапа картинки
@@ -119,31 +121,9 @@ function escKeydown(evt) {
       closePopup(openedPopup)
     }
   }
-        
-// закрытие при клике по фону
-// const overlowClick = (evt) => {
-//     if (
-//         (evt.target.classList.contains('popup') &&
-//         !evt.target.classList.contains('popup__container')) 
-//       ) {
-//         const activePopup = document.querySelector ('.popup_opened')
-//         closePopup(activePopup);
-//       }
-// };
-
-// Добавляем слушатели действий для кнопок крестика
-// function closeButton () {
-//     const closePopups = document.querySelectorAll('.popup__close');
-    
-//     closePopups.forEach((button) => {
-//       const popup = button.closest('.popup');
-//       button.addEventListener('click', () => closePopup(popup));
-//     });
-// }
-
                     
 // универсальная функция оверлея и крестика(спасибоо за наводку, удобно очень)
-function universalClick () {
+function setCloseListeners () {
     const popups = document.querySelectorAll('.popup')
 
       popups.forEach((popup) => {
