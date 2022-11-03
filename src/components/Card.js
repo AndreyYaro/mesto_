@@ -1,9 +1,9 @@
 export default class Card {
-  constructor(data, cardSelector, openPopupImg) {
+  constructor(data, cardSelector, handleCardClick) {
     this._link = data.link;
     this._name = data.name;
     this._cardSelector = cardSelector;
-    this._openPopupImg = openPopupImg;
+    this._handleCardClick = handleCardClick;
   }
   _getTemplate() {
     const cardElement = document
@@ -26,11 +26,11 @@ export default class Card {
     this._element
       .querySelector(".element__image")
       .addEventListener("click", () => {
-        this._openPopupImg(this._name, this._link);
+        this._handleCardClick(this._name, this._link);
       });
   }
 
-  createCard() {
+  generateCard() {
     this._element = this._getTemplate();
     this._cardImage = this._element.querySelector(".element__image");
     this._cardImage.src = this._link;
