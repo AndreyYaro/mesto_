@@ -12,13 +12,23 @@ import {
   addButton,
   popupEdit,
   popupAdd,
-  nameInput,
-  jobInput,
   listElement,
   validationConfig,
 } from "../utils/constants.js";
 
 const popupWithImage = new PopupWithImage(".popup-card");
+
+const popupWithEditForm = new PopupWithForm(".popup_type_edit", (data) => {
+  userInfo.setUserInfo(data.name, data.profession);
+});
+
+const popupWithAddForm = new PopupWithForm(".popup_type_add", (dataCard) => {
+  cardsSection.addItem(createCard(dataCard));
+});
+
+popupWithAddForm.setEventListeners();
+popupWithEditForm.setEventListeners();
+popupWithImage.setEventListeners();
 
 const cardsSection = new Section(
   {
@@ -32,38 +42,32 @@ const cardsSection = new Section(
 
 const userInfo = new UserInfo(".profile__name", ".profile__profession");
 
-const handleCardClick = (name, link) => {
-  popupWithImage.open(name, link);
-  popupWithImage.setEventListeners();
-};
-
 const createCard = (cardData) => {
-  return new Card(cardData, ".template", handleCardClick).generateCard();
+  return new Card(
+    cardData,
+    ".template",
+    popupWithImage.open.bind(popupWithImage)
+  ).generateCard();
 };
 
 function inputEditContent() {
   const dataUser = userInfo.getUserInfo();
-  nameInput.value = dataUser.name;
-  jobInput.value = dataUser.info;
+  popupWithEditForm.setInputValues({
+    name: dataUser.name,
+    profession: dataUser.profession,
+  });
 }
 
 const openEditPopup = () => {
+  popupWithEditForm.open();
   inputEditContent();
   formValidateEdit.resetValidation();
-  popupWithEditForm.open();
 };
 
 const openAddPopup = () => {
   popupWithAddForm.open();
   formValidateAdd.resetValidation();
 };
-
-const popupWithEditForm = new PopupWithForm(".popup_type_edit", (data) =>
-  userInfo.setUserInfo(data)
-);
-const popupWithAddForm = new PopupWithForm(".popup_type_add", (dataCard) => {
-  cardsSection.addItem(createCard(dataCard));
-});
 
 const formValidateEdit = new FormValidator(validationConfig, popupEdit);
 const formValidateAdd = new FormValidator(validationConfig, popupAdd);

@@ -23,6 +23,12 @@ export default class PopupWithForm extends Popup {
     super.setEventListeners();
   }
 
+  setInputValues(data) {
+    this._inputList.forEach((input) => {
+      input.value = data[input.name];
+    });
+  }
+
   close() {
     this._form.reset();
     super.close();

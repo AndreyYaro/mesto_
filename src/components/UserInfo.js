@@ -7,11 +7,11 @@ export default class UserInfo {
   getUserInfo() {
     return {
       name: this._nameSelector.textContent,
-      info: this._professionSelector.textContent,
+      profession: this._professionSelector.textContent,
     };
   }
-  setUserInfo(data) {
-    this._nameSelector.textContent = data.inputName;
-    this._professionSelector.textContent = data.inputProfession;
+  setUserInfo(name, profession) {
+    this._nameSelector.textContent = name;
+    this._professionSelector.textContent = profession;
   }
 }
