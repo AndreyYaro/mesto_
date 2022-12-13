@@ -1,7 +1,7 @@
-.element__name-like{
-    position: relative;
-    padding: 26px 20px 31px 21px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.element__name-like {
+  position: relative;
+  padding: 15px 20px 20px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

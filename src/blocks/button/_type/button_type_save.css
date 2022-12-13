@@ -1,12 +1,17 @@
 .button_type_save {
-  border: none;
+  margin: 20px 0 2px 0;
+  font-weight: 400;
   font-size: 18px;
-  line-height: 1.2;
-  color: #fff;
-  background-color: #000;
+  line-height: 22px;
+  text-align: center;
   border-radius: 2px;
-  padding: 16px 125px;
-  margin: 48px 0 0 0;
+  background-color: #000;
+  color: white;
+  width: 100%;
+  height: 50px;
+  cursor: pointer;
+  border: 1px solid #000000;
+  transition: 0.2s linear background-color;
 }
 
 .button_type_save:hover {
