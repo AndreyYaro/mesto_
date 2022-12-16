@@ -17,19 +17,6 @@ import {
   validationConfig,
 } from "../utils/constants.js";
 
-const handleCardProfileSubmit = (data, info) => {
-  const { name, profession } = data;
-  api.editProfile(name, profession).then((res) => {
-    info.setUserInfo(res.name, res.about, res.avatar);
-  });
-};
-
-const handleCardFormSubmit = (data, section, action) => {
-  api.addCard(data.name, data.link).then((res) => {
-    section.addItem(action(res).getElement());
-  });
-};
-
 const inputEditContent = (form, userInfo) => {
   const dataUser = userInfo.getUserInfo();
   form.setInputValues({
@@ -54,8 +41,6 @@ const openAvatarEditPopup = (form) => {
 };
 
 const init = () => {
-  let allCards = [];
-
   const userInfo = new UserInfo(
     ".profile__name",
     ".profile__profession",
@@ -66,27 +51,68 @@ const init = () => {
   const formValidateAdd = new FormValidator(validationConfig, popupAdd);
 
   const popupWithImage = new PopupWithImage(".popup-card");
+
   const popupWithEditForm = new PopupWithForm(".popup_type_edit", (data) => {
-    handleCardProfileSubmit(data, userInfo);
+    const { name, profession } = data;
+    api
+      .editProfile(name, profession)
+      .then((res) => {
+        userInfo.setUserInfo(res.name, res.about, res.avatar);
+        popupWithEditForm.close();
+      })
+      .catch((err) => {
+        console.log(err.message);
+      })
+      .finally(() => {
+        popupWithEditForm.finishLoading();
+      });
   });
 
   const popupWithAddForm = new PopupWithForm(".popup_type_add", (data) => {
-    handleCardFormSubmit(data, cardsSection, createCard);
+    api
+      .addCard(data.name, data.link)
+      .then((res) => {
+        cardsSection.addItem(createCard(res).getElement());
+        popupWithAddForm.close();
+      })
+      .catch((err) => {
+        console.log(err.message);
+      })
+      .finally(() => {
+        popupWithEditForm.finishLoading();
+      });
   });
 
-  const popupWithDelete = new PopupWithDelete(".popup_type_delete", (id) => {
-    api.deleteCard(id).then(() => {
-      allCards = allCards.filter((item) => item._id !== id);
-      renderCards();
-    });
-  });
+  const popupWithDelete = new PopupWithDelete(
+    ".popup_type_delete",
+    ({ id, callback }) => {
+      api
+        .deleteCard(id)
+        .then(() => {
+          callback();
+          popupWithDelete.close();
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
+  );
 
   const popupWithEditAvatarForm = new PopupWithForm(
     ".popup_type_avatar",
     (data) => {
-      api.editAvatar(data.link).then((res) => {
-        userInfo.setAvatar(res.avatar);
-      });
+      api
+        .editAvatar(data.link)
+        .then((res) => {
+          userInfo.setAvatar(res.avatar);
+          popupWithEditAvatarForm.close();
+        })
+        .catch((err) => {
+          console.log(err.message);
+        })
+        .finally(() => {
+          popupWithEditAvatarForm.finishLoading();
+        });
     }
   );
 
@@ -100,12 +126,27 @@ const init = () => {
       dataCard,
       ".template",
       popupWithImage.open.bind(popupWithImage),
-      popupWithDelete.open.bind(popupWithDelete, dataCard._id),
+      () => {
+        popupWithDelete.open({
+          id: dataCard._id,
+          callback: card.deleteElement.bind(card),
+        });
+      },
       () => {
         if (card.isLiked()) {
-          api.deleteLike(dataCard._id).then((res) => card.setLikes(res.likes));
+          api
+            .deleteLike(dataCard._id)
+            .then((res) => card.setLikes(res.likes))
+            .catch((err) => {
+              console.log(err.message);
+            });
         } else {
-          api.addLike(dataCard._id).then((res) => card.setLikes(res.likes));
+          api
+            .addLike(dataCard._id)
+            .then((res) => card.setLikes(res.likes))
+            .catch((err) => {
+              console.log(err.message);
+            });
         }
       },
       userId
@@ -136,22 +177,17 @@ const init = () => {
 
   let userId;
 
-  api.getProfile().then((res) => {
-    userInfo.setUserInfo(res.name, res.about, res.avatar);
-    userId = res._id;
-  });
-
-  api.getInitialCards().then((cardList) => {
-    allCards = cardList;
-    renderCards();
-  });
-
-  const renderCards = () => {
-    cardsSection.cleanItems();
-    allCards.forEach((data) => {
-      cardsSection.addItem(createCard(data).getElement());
+  Promise.all([api.getProfile(), api.getInitialCards()])
+    .then(([res, cardList]) => {
+      userInfo.setUserInfo(res.name, res.about, res.avatar);
+      userId = res._id;
+      cardList.forEach((data) => {
+        cardsSection.loadingCards(createCard(data).getElement());
+      });
+    })
+    .catch((err) => {
+      console.log(err.message);
     });
-  };
 };
 
 init();

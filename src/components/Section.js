@@ -5,18 +5,17 @@ export default class Section {
   }
 
   renderItems() {
-    this._container.innerHTML = "";
     this._items.forEach((item) => {
-      this._container.prepend(item);
+      this._container.append(item);
     });
   }
 
-  addItem(element) {
+  loadingCards(element) {
     this._items.push(element);
     this.renderItems();
   }
 
-  cleanItems() {
-    this._items = [];
+  addItem(element) {
+    this._container.prepend(element);
   }
 }

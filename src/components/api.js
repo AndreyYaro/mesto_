@@ -7,25 +7,17 @@ export default class Api {
   getProfile() {
     return fetch(`${this._baseURL}/users/me`, {
       headers: this._headers,
-    })
-      .then((res) =>
-        res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
-      )
-      .catch((err) => {
-        console.log(err);
-      });
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+    );
   }
 
   getInitialCards() {
     return fetch(`${this._baseURL}/cards`, {
       headers: this._headers,
-    })
-      .then((res) =>
-        res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
-      )
-      .catch((err) => {
-        console.log(err);
-      });
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+    );
   }
 
   editProfile(name, about) {
@@ -36,13 +28,9 @@ export default class Api {
         name,
         about,
       }),
-    })
-      .then((res) =>
-        res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
-      )
-      .catch((err) => {
-        console.log(err);
-      });
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+    );
   }
 
   addCard(name, link) {
@@ -53,52 +41,36 @@ export default class Api {
         name,
         link,
       }),
-    })
-      .then((res) =>
-        res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
-      )
-      .catch((err) => {
-        console.log(err);
-      });
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+    );
   }
 
   deleteCard(id) {
     return fetch(`${this._baseURL}/cards/${id}`, {
       method: "DELETE",
       headers: this._headers,
-    })
-      .then((res) =>
-        res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
-      )
-      .catch((err) => {
-        console.log(err);
-      });
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+    );
   }
 
   deleteLike(id) {
     return fetch(`${this._baseURL}/cards/${id}/likes`, {
       method: "DELETE",
       headers: this._headers,
-    })
-      .then((res) =>
-        res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
-      )
-      .catch((err) => {
-        console.log(err);
-      });
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+    );
   }
 
   addLike(id) {
     return fetch(`${this._baseURL}/cards/${id}/likes`, {
       method: "PUT",
       headers: this._headers,
-    })
-      .then((res) =>
-        res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
-      )
-      .catch((err) => {
-        console.log(err);
-      });
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+    );
   }
 
   editAvatar(avatar) {
@@ -108,13 +80,9 @@ export default class Api {
       body: JSON.stringify({
         avatar,
       }),
-    })
-      .then((res) =>
-        res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
-      )
-      .catch((err) => {
-        console.log(err);
-      });
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+    );
   }
 }
 

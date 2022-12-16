@@ -49,11 +49,6 @@ export default class Card {
     this._likeIcon.addEventListener("click", () => {
       this._handleLikeClick();
     });
-    // this._element
-    //   .querySelector(".element__trash")
-    //   .addEventListener("click", () => {
-    //     this._moveToTrash();
-    //   });
     this._cardImage.addEventListener("click", () => {
       this._handleCardClick(this._name, this._link);
     });
@@ -66,10 +61,10 @@ export default class Card {
     return this._element;
   }
 
-  // _moveToTrash() {
-  //   this._element.remove();
-  //   this._element = null;
-  // }
+  deleteElement() {
+    this._element.remove();
+    this._element = null;
+  }
 
   setLikes(newLikes) {
     this._likes = newLikes;
