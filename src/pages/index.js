@@ -117,7 +117,7 @@ const init = () => {
   );
 
   const cardsSection = new Section({
-    items: [],
+    render: (data) => createCard(data).getElement(),
     container: listElement,
   });
 
@@ -181,9 +181,7 @@ const init = () => {
     .then(([res, cardList]) => {
       userInfo.setUserInfo(res.name, res.about, res.avatar);
       userId = res._id;
-      cardList.forEach((data) => {
-        cardsSection.loadingCards(createCard(data).getElement());
-      });
+      cardsSection.addItems(cardList);
     })
     .catch((err) => {
       console.log(err.message);

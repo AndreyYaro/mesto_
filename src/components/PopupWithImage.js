@@ -6,12 +6,12 @@ export default class PopupWithImage extends Popup {
     this._text = document.querySelector(".popup-card__text");
   }
   open(name, link, likes, id) {
-    super.open();
     this._image.src = link;
     this._image.alt = name;
     this._text.textContent = name;
     this._likes = likes;
     this._id = id;
+    super.open();
   }
 
   close() {
