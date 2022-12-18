@@ -28,7 +28,7 @@
 .footer__signature{color:#545454;font-size:18px;font-weight:400;line-height:1.21;margin:0}@media screen and (max-width:767px){.footer__signature{font-size:14px;line-height:17px}}
 .error{color:red;display:block;font-size:12px;font-weight:400;line-height:14px;min-height:28px;opacity:0;transition:opacity .3s ease-in}
 .error_visible{opacity:1}
-.popup{align-items:center;background-color:rgba(0,0,0,.5);display:flex;height:100%;justify-content:center;left:0;opacity:0;position:fixed;top:0;visibility:hidden;width:100%;z-index:2}
+.popup{align-items:center;background-color:rgba(0,0,0,.5);display:flex;height:100%;justify-content:center;left:0;opacity:0;position:fixed;top:0;transition:visibility .5s linear,opacity .5s linear;visibility:hidden;width:100%;z-index:2}
 .popup__container{background-color:#fff;border-radius:10px;box-shadow:0 0 25px rgba(0,0,0,.15);display:flex;flex-direction:column;max-width:430px;min-width:358px;padding:34px 36px 36px;position:relative;z-index:2}@media screen and (max-width:767px){.popup__container{margin:auto;max-width:288px;padding:25px 22px}}
 .popup__form{max-width:358px}@media screen and (max-width:766px){.popup__form{max-width:238px}}
 .popup__input{border:none;border-bottom:1px solid rgba(0,0,0,.2);box-shadow:none;font-size:14px;margin:0 0 5px;padding:0 0 13px;text-decoration:none;width:100%}
@@ -41,10 +41,10 @@
 .button_type_save{background-color:#000;border:1px solid #000;border-radius:2px;color:#fff;cursor:pointer;font-size:18px;font-weight:400;height:50px;line-height:22px;margin:20px 0 2px;text-align:center;transition:background-color .2s linear;width:100%}.button_type_save:hover{opacity:.8}@media screen and (max-width:767px){.button_type_save{font-size:14px;padding:14px 82px}}
 .button_type_create{background-color:#000;border:none;border-radius:2px;color:#fff;font-size:18px;line-height:1.2;margin:20px 0 0;padding:16px 141px}.button_type_create:hover{opacity:.8}@media screen and (max-width:767px){.button_type_create{font-size:14px;padding:14px 82px}}
 .popup-card__img{margin:0;max-height:75vh;max-width:75vw}
-.popup-card{align-content:center;background-color:rgba(0,0,0,.5);display:flex;flex-direction:column;height:100%;justify-content:center;left:0;opacity:0;position:fixed;top:0;visibility:hidden;width:100%;z-index:2}
+.popup-card{align-content:center;background-color:rgba(0,0,0,.9);display:flex;flex-direction:column;height:100%;justify-content:center;left:0;opacity:0;position:fixed;top:0;visibility:hidden;width:100%;z-index:2}
 .popup-card__text{color:#fff;font-size:12px;font-weight:400;line-height:15px;margin:10px 0}
 .popup-card__container{margin:0 auto;position:relative}
 .button_type_close-card{background-image:url(2ceb783afbab75916ddc.svg);background-position:50%;background-size:100%;border:none;height:32px;position:absolute;right:-40px;top:-40px;width:32px}
-.popup_opened{opacity:1;transition:visibility .5s linear,opacity .5s linear;visibility:visible}
+.popup_opened{opacity:1;visibility:visible}
 .button_inactive{background-color:#fff;border:1px solid #000;color:#000;opacity:.2}
 
